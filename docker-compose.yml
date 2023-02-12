@@ -1,0 +1,15 @@
+version: "3.3"
+services:
+  proxy:
+    build: ./
+    container_name: proxy
+    #    networks:
+    #      - frontend
+    command: python3 manage.py collectstatic
+    command: gunicorn proxy.wsgi --bind 0.0.0.0:8000
+    volumes:
+      - ./diawest:/usr/src/diawest/
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG=1
